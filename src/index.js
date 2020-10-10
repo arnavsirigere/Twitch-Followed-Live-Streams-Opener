@@ -22,7 +22,7 @@ async function checkStreamers() {
   for (let i = 0; i < streamers.length; i++) {
     const streamer = streamers[i];
     checkStreamerIsLive(streamer).then((isLive) => {
-      if (database.list().hasOwnProperty(streamer)) {
+      if (database.has(streamer)) {
         const wasLive = database.get(streamer);
         if (!wasLive && isLive) {
           io.sockets.emit('broadcast', { streamer });
