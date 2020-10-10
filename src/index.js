@@ -10,6 +10,12 @@ app.all('/', (req, res) => {
   res.send('Alive!');
 });
 
+app.get('/live', (req, res) => {
+  let streamers = Object.keys(database.list());
+  streamers = streamers.filter((streamer) => database.get(streamer));
+  res.send({ streamers });
+});
+
 io.sockets.on('connection', (socket) => console.log(`New connection : ${socket.id}`));
 
 getAccessToken().catch((err) => console.log(err));
