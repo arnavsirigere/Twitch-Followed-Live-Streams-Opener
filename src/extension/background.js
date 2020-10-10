@@ -7,6 +7,11 @@ socket.on('connect', () => console.log('Client connected'));
 socket.on('broadcast', (data) => openTwitch(data.streamer));
 
 function openTwitch(streamer) {
-  const url = `https://twitch.tv/${streamer}`;
-  chrome.tabs.create({ url });
+  chrome.tabs.query({}, (tabs) => {
+    const url = `https://www.twitch.tv/${streamer}`;
+    const openTabs = Array.from({ length: tabs.length }, (_, i) => tabs[i].url);
+    if (!openTabs.includes(url)) {
+      chrome.tabs.create({ url });
+    }
+  });
 }

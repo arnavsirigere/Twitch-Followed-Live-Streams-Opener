@@ -3,6 +3,7 @@
   "name": "Twitch Followed Live Streams Opener",
   "version": "1.0",
   "description": "A Chrome Extension for Twitch that will open any stream of someone I follow in a new tab as soon as it goes live!",
+  "permissions": ["tabs"],
   "background": {
     "scripts": ["libraries/socket.io.js", "background.js"]
   }
