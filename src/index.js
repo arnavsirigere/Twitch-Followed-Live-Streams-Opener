@@ -25,6 +25,13 @@ setInterval(() => checkStreamers().catch((err) => console.log(err)), 5000);
 
 async function checkStreamers() {
   const streamers = await getFollowedStreamers();
+  // Deleting streamer from DB if they were unfollowed
+  const streamersInDB = Object.keys(database.list());
+  for (let streamer of streamersInDB) {
+    if (!streamers.includes(streamer)) {
+      database.delete(streamer);
+    }
+  }
   for (let i = 0; i < streamers.length; i++) {
     const streamer = streamers[i];
     checkStreamerIsLive(streamer).then((isLive) => {
