@@ -18,10 +18,13 @@ app.get('/live', (req, res) => {
 
 io.sockets.on('connection', (socket) => console.log(`New connection : ${socket.id}`));
 
-getAccessToken().catch((err) => console.log(err));
-checkStreamers().catch((err) => console.log(err));
-// Checking if a streamer goes live every 5 seconds
-setInterval(() => checkStreamers().catch((err) => console.log(err)), 5000);
+getAccessToken()
+  .then(() => {
+    checkStreamers().catch((err) => console.log(err));
+    // Checking if a streamer goes live every 5 seconds
+    setInterval(() => checkStreamers().catch((err) => console.log(err)), 5000);
+  })
+  .catch((err) => console.log(err));
 
 async function checkStreamers() {
   const streamers = await getFollowedStreamers();
