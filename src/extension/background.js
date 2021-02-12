@@ -22,7 +22,7 @@ function openTwitch(streamer) {
 openLiveStreams().catch((err) => console.log(err));
 
 async function openLiveStreams() {
-  const response = await fetch(`https://cors-anywhere.herokuapp.com/${server}/live`);
+  const response = await fetch(`${server}/live`);
   const responseData = await response.json();
   const { streamers } = responseData;
   for (let streamer of streamers) {
