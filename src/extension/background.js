@@ -10,15 +10,15 @@ socket.on('broadcast', (data) => openTwitch(data.streamer));
 
 function openTwitch(streamer) {
   chrome.tabs.query({}, (tabs) => {
-    const url = `https://www.twitch.tv/${streamer}`;
-    const openTabs = Array.from({ length: tabs.length }, (_, i) => tabs[i].url);
+    const url = `https://www.twitch.tv/${streamer}`.toLowerCase();
+    const openTabs = Array.from({ length: tabs.length }, (_, i) => tabs[i].url.toLowerCase());
     if (!openTabs.includes(url)) {
       chrome.tabs.create({ url });
     }
   });
 }
 
-// Open the current followed streams that are live when the browser starts
+// Open the current followed streams that are live when the browser launches
 openLiveStreams().catch((err) => console.log(err));
 
 async function openLiveStreams() {
